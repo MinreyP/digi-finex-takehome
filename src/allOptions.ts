@@ -1,3 +1,5 @@
+// generate a specific number of options and export it for further use
+
 const genOptions = (number: number) => {
     const options = [];
 

@@ -3,6 +3,7 @@ import { ChangeEvent, ChangeEventHandler, useState } from 'react';
 
 const Form = () => {
     const optionItems = allOptions;
+    // assign an initial selected item
     const [selectedItems, setSelectedItems] = useState<string[]>([optionItems[5].id]);
 
     const checkboxHandler: ChangeEventHandler<HTMLInputElement> = (e: ChangeEvent<HTMLInputElement>) => {
@@ -10,8 +11,10 @@ const Form = () => {
         const targetID = e.target.value;
 
         if (isSelected) {
+            // if the input is checked, then record its ID in the selectedItems
             setSelectedItems(prevSelected => [...prevSelected, targetID]);
         } else {
+            // if the input is unchecked, remove its ID from the selectedItems
             setSelectedItems(prevSelected => {
                 return prevSelected.filter(id => id !== targetID);
             })
@@ -19,6 +22,9 @@ const Form = () => {
     }
 
     const selectAllHandler = () => {
+        // it's a toggle feature:
+        // check if all the option items are selected, if they are, then unselect all of them
+        // otherwise select all of them
         if (selectedItems.length === optionItems.length) {
             setSelectedItems([]);
         } else {
