@@ -5,7 +5,7 @@ function App() {
 
   return (
     <>
-      <h1>Hello Vite + React</h1>
+      <h1>Options Available</h1>
       <Form />
     </>
   )

@@ -1,0 +1,59 @@
+.input-wrapper {
+    width: 100%;
+    display: grid;
+    grid-auto-flow: column;
+    /* grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, minmax(32px, auto)); */
+    gap: 1rem;
+    border: solid 1px #eee;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.form-control {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.form-control label {
+    margin-left: .3em;
+}
+
+ul,
+li {
+    list-style: none;
+}
+
+.button-group {
+    margin: 2rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-group button {
+    background-color: #e5e5e5;
+    ;
+}
+
+.button-group .button-unit {
+    height: 40.69px;
+    margin: 0 1rem;
+    align-self: baseline;
+}
+
+.button-unit input {
+    height: 100%;
+    border: solid 1px #eee;
+    text-align: center;
+}
+
+.selection-list {
+    padding: 0;
+}
+
+.selection-list li {
+    display: inline-block;
+    margin-right: 1rem;
+}
