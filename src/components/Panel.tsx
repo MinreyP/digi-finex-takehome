@@ -1,10 +1,10 @@
 import { genOptions, spreadOptions } from '../allOptions';
-import './form.css';
+import './Panel.css';
 import { useState, useRef } from 'react';
 import InputGroup from './InputGroup';
 
 
-function Form() {
+const Panel = () => {
     // generate desired number of options
     const optionItems = genOptions(23);
     const numOfOptions = useRef(optionItems.length);
@@ -56,4 +56,4 @@ function Form() {
     )
 }
 
-export default Form;
+export default Panel;

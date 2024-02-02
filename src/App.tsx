@@ -1,12 +1,12 @@
 import './App.css';
-import Form from './components/Form';
+import Panel from './components/Panel';
 
 function App() {
 
   return (
     <>
       <h1>Available Options</h1>
-      <Form />
+      <Panel />
     </>
   )
 }
