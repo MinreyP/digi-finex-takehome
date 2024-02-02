@@ -5,7 +5,7 @@ function App() {
 
   return (
     <>
-      <h1>Options Available</h1>
+      <h1>Available Options</h1>
       <Form />
     </>
   )

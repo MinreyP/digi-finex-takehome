@@ -1,10 +1,8 @@
 .input-wrapper {
     width: 100%;
-    display: grid;
-    grid-auto-flow: column;
-    /* grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(4, minmax(32px, auto)); */
-    gap: 1rem;
+    display: flex;
+    justify-content: start;
+    align-items: start;
     border: solid 1px #eee;
     border-radius: 8px;
     padding: 1rem;
@@ -14,6 +12,7 @@
     display: flex;
     justify-content: start;
     align-items: center;
+    padding: .5em 1em;
 }
 
 .form-control label {

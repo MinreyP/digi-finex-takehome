@@ -1,90 +1,52 @@
-import { allOptions } from '../allOptions';
+import { genOptions, spreadOptions } from '../allOptions';
 import './form.css';
-import { ChangeEvent, ChangeEventHandler, useState } from 'react';
+import { useState, useRef } from 'react';
+import InputGroup from './InputGroup';
 
-const Form = () => {
-    const optionItems = allOptions;
-    // assign an initial selected item
-    const [selectedItems, setSelectedItems] = useState<string[]>([optionItems[5].id]);
+
+function Form() {
+    // generate desired number of options
+    const optionItems = genOptions(23);
+    const numOfOptions = useRef(optionItems.length);
+
     // assign an initial columns for the UI
     const [columns, setColumns] = useState(3);
+    const renderGroups = spreadOptions(optionItems, columns);
 
-    // generate grid layout styling
-    const gridStyle = {
-        gridAutoFlow: 'column',
-        gridTemplateColumns: `repeat(${columns}, 1fr)`,
-        gridTemplateRows: 'repeat(4, minmax(32px, auto))',
-    };
+    // assign an initial selected item
+    const [selectedItems, setSelectedItems] = useState<string[]>(['2', '4', '6']);
 
-    const checkboxHandler: ChangeEventHandler<HTMLInputElement> = (e: ChangeEvent<HTMLInputElement>) => {
-        const isSelected = e.target.checked;
-        const targetID = e.target.value;
-
-        if (isSelected) {
-            // if the input is checked, then record its ID in the selectedItems
-            setSelectedItems(prevSelected => [...prevSelected, targetID]);
-        } else {
-            // if the input is unchecked, remove its ID from the selectedItems
-            setSelectedItems(prevSelected => {
-                return prevSelected.filter(id => id !== targetID);
-            })
+    const handleColumns = (action: string) => {
+        // Avoid number of columns being bumped up to over X, or slammed down below Y for reasonable concern of layout
+        if (action === 'inc' && numOfOptions.current / columns <= 3) {
+            alert('Max Col Reached');
+            return;
         }
-    }
-
-    const selectAllHandler = () => {
-        // it's a toggle feature:
-        // check if all the option items are selected, if they are, then unselect all of them
-        // otherwise select all of them
-        if (selectedItems.length === optionItems.length) {
-            setSelectedItems([]);
-        } else {
-            const allID = optionItems.map(option => option.id);
-            setSelectedItems(allID);
+        if (action === 'dec' && columns === 2) {
+            alert('Min Col Reached');
+            return;
         }
-    }
-
-    const updateColumns = (action: string) => {
-        // Avoid number of columns being bumped to over 6, or down below 2 for reasonable layout
-        if (action === 'inc' && columns < 6) {
+        if (action === 'inc') {
             setColumns(prev => prev + 1);
-            return;
         }
-        if (action === 'dec' && columns > 2) {
+        if (action === 'dec') {
             setColumns(prev => prev - 1);
-            return;
-        } else {
-            alert(`Layout Limit Reached!`);
         }
     }
+
 
     return (
         <>
-            <form className="input-wrapper" style={gridStyle}>
-                {optionItems.map(option => {
-                    return (
-                        <div className="form-control">
-                            <input id={option.id} value={option.id} type="checkbox"
-                                checked={selectedItems.includes(option.id)}
-                                onChange={checkboxHandler} />
-                            <label htmlFor={option.id}>{option.name}</label>
-                        </div>
-                    )
-                })}
-            </form>
+            <InputGroup group={renderGroups} selected={selectedItems} setSelectedItems={setSelectedItems} />
             <div className="button-group">
                 <div className="button-unit">
-                    <button onClick={selectAllHandler} type="button">
-                        {selectedItems.length === optionItems.length ? 'Unselect All' : 'Select All'}
-                    </button>
-                </div>
-                <div className="button-unit">
-                    <span style={{ display: 'inline-block', marginLeft: '1rem' }}>Number of Columns:</span>
-                    <button className="number-click" type="button" onClick={() => updateColumns('dec')}>-</button>
-                    <input type="text" size={10} value={columns} />
-                    <button className="number-click" type="button" onClick={() => updateColumns('inc')}>+</button>
+                    <span style={{ display: 'inline-block', marginRight: '2rem' }}>Number of Columns:</span>
+                    <button className="number-click" type="button" onClick={() => handleColumns('dec')}>-</button>
+                    <input type="text" className="number-display" value={columns} size={10} onChange={(e) => e.preventDefault()} />
+                    <button className="number-click" type="button" onClick={() => handleColumns('inc')}>+</button>
                 </div>
             </div>
-            <div>
+            <div className="print-result">
                 <h4>Print Selected Options:</h4>
                 <ul className="selection-list">
                     {selectedItems.map(id => <li key={id}>Option {parseInt(id) + 1}</li>)}
@@ -94,4 +56,4 @@ const Form = () => {
     )
 }
 
-export default Form
+export default Form;
