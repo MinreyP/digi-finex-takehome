@@ -19,7 +19,7 @@ export const genOptions = (number: number) => {
 
 // spread options evenly as possible
 export const spreadOptions = (items: Option[], columnsNum: number) => {
-    const itemsArr = items;
+    const itemsArr = [...items];
     const divideInt = columnsNum;
     let itemsGroup: Option[][] = [];
 

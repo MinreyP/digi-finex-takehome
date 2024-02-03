@@ -1,16 +1,17 @@
 import { genOptions, spreadOptions } from '../allOptions';
 import './Panel.css';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import InputGroup from './InputGroup';
 
 
 const Panel = () => {
     // generate desired number of options
     const optionItems = genOptions(23);
-    const numOfOptions = useRef(optionItems.length);
 
     // assign an initial columns for the UI
     const [columns, setColumns] = useState(3);
+
+    // determine the rule of options rendering
     const renderGroups = spreadOptions(optionItems, columns);
 
     // assign an initial selected item
@@ -18,7 +19,7 @@ const Panel = () => {
 
     const handleColumns = (action: string) => {
         // Avoid number of columns being bumped up to over X, or slammed down below Y for reasonable concern of layout
-        if (action === 'inc' && numOfOptions.current / columns <= 3) {
+        if (action === 'inc' && optionItems.length / columns <= 3) {
             alert('Max Col Reached');
             return;
         }
